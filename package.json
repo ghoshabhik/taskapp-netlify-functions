@@ -1,0 +1,19 @@
+{
+  "name": "netlify-personal-website-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "netlify": "netlify dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.11.17"
+  },
+  "devDependencies": {
+    "netlify-cli": "^3.8.4"
+  }
+}
