@@ -6,7 +6,7 @@ const Task = require('./models/task')
 
 exports.handler = async (event, request, context) => {
 
-    const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    const weekDays = ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]
     const searchDate = event.queryStringParameters['date']
     const parsedDate = new Date(searchDate)
     const day = weekDays[parsedDate.getDay()]
