@@ -23,7 +23,9 @@ exports.handler = async (event, request, context) => {
     const respData = await allDefaultTasksFromAirtable.data
     let taskForDay = []
     taskForDay = respData.records.filter( data => data.fields.DayOfWeek == `${day}`)
-    // console.log(taskForDay)
+    //console.log('from Airtable ----- ',taskForDay)
+    const checkId = taskForDay[0].id
+    console.log('check ID: ',taskForDay[0].id)
    
     const uri = `mongodb+srv://${mongodb_username}:${mongodb_password}@abhikatlasmumbaiin.16jmi.mongodb.net/${mongodb_database}?retryWrites=true&w=majority`;
 
@@ -37,22 +39,41 @@ exports.handler = async (event, request, context) => {
                 taskCategory: task.fields.Category,
                 plannedHours: task.fields.PlannedHours,
                 actualHours: 0,
-                taskDate: parsedDate
+                taskDate: parsedDate,
+                taskId: task.id
             })
         )
     })
-    console.log(tasks)
-    // const addedTasks = await Task.insertMany(tasks)
+    //console.log('to MongoDb ----- ',tasks)
 
-    return{
-        statusCode: 200,
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
-          },
-        // body: JSON.stringify(addedTasks)
-        body: JSON.stringify({msg: 'ok'})
-        
+
+    let checkTask = await Task.find({ $and: [{taskId: checkId}, {taskDate: parsedDate}]})
+    console.log('Does it Exist? ---- ',checkTask)
+    if(checkTask.length === 0 ){
+        const addedTasks = await Task.insertMany(tasks)
+        return{
+            statusCode: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
+              },
+            body: JSON.stringify(addedTasks)
+            //body: JSON.stringify({msg: 'ok'})
+            
+        }
+    } else {
+        return{
+            statusCode: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
+              },
+            body: JSON.stringify(tasks)
+            //body: JSON.stringify({msg: 'ok'})
+            
+        }
     }
+    
 }

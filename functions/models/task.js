@@ -19,6 +19,9 @@ const taskSchema = new mongoose.Schema({
     },
     taskDate: {
         type: Date
+    },
+    taskId: {
+        type: String
     }
 })
 
