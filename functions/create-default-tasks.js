@@ -41,8 +41,8 @@ exports.handler = async (event, request, context) => {
             })
         )
     })
-    //console.log(tasks)
-    const addedTasks = await Task.insertMany(tasks)
+    console.log(tasks)
+    // const addedTasks = await Task.insertMany(tasks)
 
     return{
         statusCode: 200,
@@ -51,7 +51,8 @@ exports.handler = async (event, request, context) => {
             'Access-Control-Allow-Headers': 'Content-Type',
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
           },
-        body: JSON.stringify(addedTasks)
+        // body: JSON.stringify(addedTasks)
+        body: JSON.stringify({msg: 'ok'})
         
     }
 }

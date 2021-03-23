@@ -1,10 +1,15 @@
 
 const mongoose = require('mongoose')
-const axios = require('axios')
 
 const Task = require('./models/task')
 
 exports.handler = async (event, request, context) => {
+    // console.log(JSON.parse({
+    //     plannedHours: "2",
+    //     taskCategory: "Category",
+    //     taskDate: "2021-03-24",
+    //     taskName: "Test Task"
+    // }))
     if (event.httpMethod == "POST") {
         let data = JSON.parse(event.body)
         data.actualHours = 0
@@ -25,17 +30,16 @@ exports.handler = async (event, request, context) => {
             actualHours: data.actualHours,
             taskDate: data.taskDate
         })
-
+        console.log('----------------',dataToSave)
         let task = await dataToSave.save()
         console.log(task)
         return {
             statusCode: 200,
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
             },
             body: JSON.stringify(task)
+            // body: JSON.stringify({message: "OK"})
 
         }
     } else {
@@ -43,8 +47,6 @@ exports.handler = async (event, request, context) => {
             statusCode: 404,
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
             },
             body: 'Get method not allowed'
         }
