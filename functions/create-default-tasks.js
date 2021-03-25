@@ -19,7 +19,7 @@ exports.handler = async (event, request, context) => {
     const config = {
         headers: { Authorization: `Bearer ${airtable_key}` }
     }
-    const allDefaultTasksFromAirtable = await axios.get('https://api.airtable.com/v0/appnJyGDL7ilErfRQ/defaulttasks', config)
+    const allDefaultTasksFromAirtable = await axios.get('https://api.airtable.com/v0/appnJyGDL7ilErfRQ/defaulttasks?view=Grid%20view', config)
     const respData = await allDefaultTasksFromAirtable.data
     let taskForDay = []
     taskForDay = respData.records.filter( data => data.fields.DayOfWeek == `${day}`)
