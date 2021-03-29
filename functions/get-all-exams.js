@@ -19,7 +19,8 @@ exports.handler = async (event, request, context) => {
             remainingDays: exam.fields.RemainingDays,
             noOfTopics: exam.fields.NoOfTopics,
             noOfTopicsCompleted: exam.fields.NoOfTopicsCompleted,
-            noOfTopicsNotCompleted: exam.fields.NoOfTopics - exam.fields.NoOfTopicsCompleted
+            noOfTopicsNotCompleted: exam.fields.NoOfTopics - exam.fields.NoOfTopicsCompleted,
+            totalHoursPlanned: exam.fields.TotalPlannedStudyHours
         })
     })
     return{
